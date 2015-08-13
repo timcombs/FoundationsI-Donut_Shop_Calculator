@@ -1,0 +1,112 @@
+/* Header should go across the width of the page
+after the text a gif with a donut rolliing to the right
+will try to make this a liquid layout
+nav bar will be floated to the right of the page */
+
+/* styles the header */
+header {
+	height: 100px;
+	background-color: darkblue;
+	border-radius: 5px;
+	color: lightblue;
+	padding: 10px 0 20px 10px;
+}
+
+/* styles the footer */
+footer {
+	background-color: darkblue;
+	border-radius: 5px;
+	color: lightblue;
+	padding: 1px 0 1px 0;
+	text-align: center;
+}
+
+/* moves the header bar and 2nd line of header text closer to top of page */
+header h2 {
+	margin-top: -15px;
+}
+/* sets width of the body and font for the body text */
+body {
+	max-width: 960px;
+	min-width: 680px;
+	font-family: Verdana, sans-serif;
+}
+
+/* styles the separate list elements */
+li {
+	display: block;
+	margin: 0 auto 0 auto;
+	color: darkblue;
+	padding-top: 7px;
+}
+
+/* styles the overall list */
+ul {
+	text-align: center;
+	padding: 0;
+}
+
+/* styles the section that contains the instructions and the table */
+section {
+	max-width: 960px;
+	height: 100%;	
+}
+
+/* makes the footer stay underneath the body */
+footer {
+	clear: both;
+}
+
+/* centers the table in the section */
+td {
+	text-align: center;
+}
+
+/* styles the table */
+table {
+	height: 400px;
+	background-color: turquoise;
+	border-radius: 10px;
+}
+
+/* adds colors to every other line of the table */
+tr.even {
+	background-color: lightgreen;
+}
+
+/* highlights a line of the table when mouse cursor is over it */
+tr:hover {
+	background-color: yellow;
+}
+
+/* makes the padding similar on elements that have text in them */
+h3, p, table {
+	padding: 0 10px 5px 10px;
+}
+
+/* the column styling makes the colums adjust to window size */
+.column1 {
+	width: 74%;
+	float: left;
+	background-color: lightgreen;
+}
+
+.column2 {
+	width: 24%;
+	float: right;
+	background-color: lightblue;
+}
+
+/* floats the headers in the header bar to the left so gif can be next to them */
+hgroup {
+	display: inline-block;
+	float: left;
+}
+
+/* styles and floats the rolling donut gif */
+#logoPic {
+	display: inline-block;
+	float: right;
+	width: 50%;
+	padding: 0;
+}

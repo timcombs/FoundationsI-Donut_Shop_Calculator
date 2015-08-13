@@ -1,0 +1,148 @@
+<!--semantic HTML-->
+
+<!--A header with both a title and a subtitle-->
+<!--A set of instructions that describe how the program works.-->
+<!--A table with header rows, header columns, and dummy data for each location.-->
+<!--A footer with copyright information-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Donut Shop Baking Calculator</title>
+		<link href="donutStylesheet2.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="donut_shop.js"></script>
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+
+		<header>	<!--
+						Want header to have the the text and a
+						gif of a donut rolling to the right 
+					-->
+			<hgroup>
+				<h1>Donut Shop Rock</h1>
+				<h2>Donut Baking Calculator</h2>
+			</hgroup>		
+			<!--yep. i made a rolling donut-->
+			<img src="rollingdonut2.gif" id="logoPic">	
+
+		</header>
+
+
+		<section>
+<!-- instructions and table in one section to float left -->
+<!-- instructions floated to left -->
+			<div class="column1">
+				<h3>
+					Instructions for the donut baking calculator
+				</h3>
+
+				<p class=>
+					The donut shop calculator is intended to help you plan how many donuts
+					to bake each hour for your specific store.
+				</p>
+				<p>
+					The calculations are based on:<br>
+					the amount of customers that come in per hour<br>
+					the average amount of donuts each customer purchases<br>
+					the hours of operation
+				</p>
+				<p>
+					Please click on the donut under your store name.
+				</p>
+
+<!-- table floated to left -->
+				<table>
+					<tr>
+						<th colspan="4">Donut Baking Calculator</th>
+					</tr>
+					<tr>
+						<th id="storeName" colspan="4">Downtown Store</th>
+					</tr>
+					<tr>
+						<th>Hour of Operation</th>
+						<th>Hourly Customers</th>
+						<th>Average Donut<br>Purchase</th>
+						<th>Amount to Bake</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>22</td>
+						<td>4.75</td>
+						<td>99</td>
+					</tr>
+					<tr class="even">
+						<td>2</td>
+						<td>35</td>
+						<td>4.75</td>
+						<td>158</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>34</td>
+						<td>4.75</td>
+						<td>153</td>
+					</tr>
+					<tr class="even">
+						<td>4</td>
+						<td>20</td>
+						<td>4.75</td>
+						<td>90</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>41</td>
+						<td>4.75</td>
+						<td>185</td>
+					</tr>
+					<tr class="even">
+						<td>6</td>
+						<td>36</td>
+						<td>4.75</td>
+						<td>162</td>
+					</tr>
+					<tr>
+						<td>7</td>
+						<td>41</td>
+						<td>4.75</td>
+						<td>185</td>
+					</tr>
+					<tr class="even">
+						<td>8</td>
+						<td>21</td>
+						<td>4.75</td>
+						<td>95</td>
+					</tr>
+						<td></td>
+						<td></td>
+						<th>total donuts to bake today</th>
+						<td>1127</td>
+					</tr>	
+				</table>
+			</div>
+		
+
+<!--Want list of stores in vertical bar floated to the right-->
+				<div class="column2">
+					<form>
+						<ul>
+							<!-- make these into buttons that have images on them -->
+							<!-- so onsubmit will change the information in the table -->
+							<!-- or should i use onclick and not make them buttons? -->
+							<li><label>Downtown<br><input type="image" src="images/downtownShop.jpg" width="75" height="75"/></label></li><br>
+							<li><label>Capitol Hill<br><input type="image" src="images/capitolHillShop.jpg" width="75" height="75"/></label></li><br>
+							<li><label>South Lake<br>Union<br><input type="image" src="images/southLakeUnionShop.jpg" width="75" height="75"/></label></li><br>
+							<li><label>Wedgewood<br><input type="image" src="images/wedgewoodShop.jpg" width="75" height="75"/></label></li><br>
+							<li><label>Ballard<br><input type="image" src="images/ballardShop.jpg" width="75" height="75"/></label></li><br>
+						</ul>
+					</form>	
+				</div>
+
+			</section>
+		
+	<footer>
+		<p>&copy; 2015 Donut Shop Rock</p>
+	</footer>
+	</body}
+</html> 
