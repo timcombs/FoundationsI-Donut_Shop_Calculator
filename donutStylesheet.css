@@ -32,18 +32,38 @@ body {
 	font-family: Verdana, sans-serif;
 }
 
+.selected {
+	background-color: lightgreen;
+	border: 10px solid turquoise;
+	border-radius: 15px;
+}
+
+.faded{
+	opacity: .3;
+}
+
 /* styles the separate list elements */
 li {
 	display: block;
-	margin: 0 auto 0 auto;
+	margin-bottom: 15px;
 	color: darkblue;
 	padding-top: 7px;
+	padding-bottom: 5px;
+}
+
+li:hover {
+	background-color: yellow;
 }
 
 /* styles the overall list */
 ul {
 	text-align: center;
 	padding: 0;
+}
+
+.listImage {
+	width: 75px;
+	height: 75px;
 }
 
 /* styles the section that contains the instructions and the table */
@@ -62,11 +82,34 @@ td {
 	text-align: center;
 }
 
+th.columnHeadings {
+	text-align: center;
+	margin-top: 15px;
+}
+
+th.shopName {
+	font-size: 28px;
+	text-align: left;
+}
+
+th.title {
+	font-size: 32px;
+	text-align: left;
+}
+
 /* styles the table */
 table {
-	height: 400px;
+	min-height: 640px;
+	width: 100%;
 	background-color: turquoise;
 	border-radius: 10px;
+	margin: 0;
+}
+
+tr {
+	height: 20px;
+	padding: 0;
+	margin: 0;
 }
 
 /* adds colors to every other line of the table */
@@ -89,12 +132,14 @@ h3, p, table {
 	width: 74%;
 	float: left;
 	background-color: lightgreen;
+	min-height: 910px;
 }
 
 .column2 {
 	width: 24%;
 	float: right;
 	background-color: lightblue;
+	min-height: 910px;
 }
 
 /* floats the headers in the header bar to the left so gif can be next to them */
