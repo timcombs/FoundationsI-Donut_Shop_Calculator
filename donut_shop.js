@@ -70,6 +70,23 @@ wedgewoodShop.donutsNeeded();
 ballardShop.donutsNeeded();
 
 
+
+//						ONE
+// make it so the user can update the avg donut purchase
+// this should recalculate the hourly donuts baked & total donuts baked
+// but should not refigure the hourly customers
+
+//						&
+
+//						TWO
+// make it so the user can update the hourly customers
+// this should recalculate the hourly donuts baked & total donuts baked
+// but should not refigure the other hourly customers
+
+// #2 should be easier than #1, any iterations should be done thru .each
+// have to find code for an editable table
+
+
 // jQuery to create and style the table
 // and to make a few animations on the page
 
@@ -77,8 +94,11 @@ $(document).ready(function(){
 	$('li').on("click", function(){
 
 		// adding & removing classes to make an animation that highlights the selected shop
-		$('li').removeClass('selected').addClass('faded');
-		$(this).addClass('selected').removeClass('faded');
+		$('li').animate({opacity: 0.25}, 100, "swing");
+		$(this).animate({opacity: 1.0}, 700, "swing");
+
+		//$('li').removeClass('selected').addClass('faded');
+		//$(this).addClass('selected').removeClass('faded');
 
 		// removes old table
 		$('table tr').remove();
