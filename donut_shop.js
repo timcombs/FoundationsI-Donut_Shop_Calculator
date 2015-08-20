@@ -10,10 +10,10 @@
 		this.avgDonuts = avgDonuts;
 		this.hoursOperation = hoursOperation;
 
-		// an array to hold customers and donuts per hour
-		this.hourlyCustomerData = [];
-		this.hourlyDonutData = [];
-		this.dailyDonutData = [];
+		// arrays to hold customers and donuts per hour
+		this.hourlyCustomerData = [];	// customers in shop each hour of operation
+		this.hourlyDonutData = [];		// hourly donuts baked
+		this.dailyDonutData = [];		// total donuts baked
 
 		
 		// method to calculate and display number of donuts each shop needs to bake per hour and per day
@@ -94,11 +94,11 @@ $(document).ready(function(){
 	$('li').on("click", function(){
 
 		// adding & removing classes to make an animation that highlights the selected shop
-		$('li').animate({opacity: 0.25}, 100, "swing");
-		$(this).animate({opacity: 1.0}, 700, "swing");
+		// $('li').animate({opacity: 0.25}, 100, "swing");
+		// $(this).animate({opacity: 1.0}, 700, "swing");
 
-		//$('li').removeClass('selected').addClass('faded');
-		//$(this).addClass('selected').removeClass('faded');
+		$('li').removeClass('selected').addClass('faded');
+		$(this).addClass('selected').removeClass('faded');
 
 		// removes old table
 		$('table tr').remove();
@@ -116,7 +116,7 @@ $(document).ready(function(){
 		// constructing the top half of the table - before iterated rows
 		var $tableTitle = $("<tr><th colspan='2' class='title'>Donut Baking Calculator</th></tr>");
 		var $shopName = $("<tr><th colspan='2' class='shopName'>" + shopToUse.storeLocation + " Shop</th></tr>");
-		var $avgDonutPurchase = $("<tr><th>Average Donut per Purchase</th><td>" + shopToUse.avgDonuts + "</td></tr>");
+		var $avgDonutPurchase = $("<tr><th>Average Donut per Purchase</th><td id='avgCustPurchase'>" + shopToUse.avgDonuts + "</td></tr>");
 		var $tableHeadings = $("<tr><th class='columnHeadings'>Hour of Operation</th><th class='columnHeadings'>Hourly Customers</th><th class='columnHeadings'>Amount to Bake</th></tr>");
 
 		$("table#theTable").append($tableTitle);    // places title row in table
@@ -129,15 +129,73 @@ $(document).ready(function(){
 		for (i=0; i<shopToUse.hoursOperation; i++) {
 			// if statement adds a light green color to every other row
 			if ((i+1)%2 === 0) {
-			var $hourlyData = $("<tr class='even'><td>" + (i+1) + "</td><td>" + shopToUse.hourlyCustomerData[i] + "</td><td>" + shopToUse.hourlyDonutData[i] + "</td></tr>");
+			var $hourlyData = $("<tr class='dataRows even'><td>" + (i+1) + "</td><td>" + shopToUse.hourlyCustomerData[i] + "</td><td>" + shopToUse.hourlyDonutData[i] + "</td></tr>");
 			} else {
-				var $hourlyData = $("<tr><td>" + (i+1) + "</td><td>" + shopToUse.hourlyCustomerData[i] + "</td><td>" + shopToUse.hourlyDonutData[i] + "</td></tr>");
+				var $hourlyData = $("<tr class='dataRows'><td>" + (i+1) + "</td><td>" + shopToUse.hourlyCustomerData[i] + "</td><td>" + shopToUse.hourlyDonutData[i] + "</td></tr>");
 			}
 			$("tr:last").after($hourlyData); 
 		}
 		// creates last row of table which is the total donuts needed to bake today
-		var $totalDonuts = $("<tr><td></td><th>total donuts to bake today</th><td>"+ shopToUse.dailyDonutData[0] + "</td></tr>");
+		var $totalDonuts = $("<tr class='totalDonutRow'><td></td><th>total donuts to bake today</th><td>"+ shopToUse.dailyDonutData[0] + "</td></tr>");
 		$("tr:last").after($totalDonuts);
+	
+
+
+		// http://learn.jquery.com/events/event-delegation/ clearly lays out event delegation
+		// http://stackoverflow.com/questions/12829963/events-triggered-by-dynamically-generated-element-are-not-captured-by-event-hand lays out a method to bind events to elements actually in the html so they bubble to future-created descendent elements of that ancestor element.
+		// delegates event to the closest static ancestor element within the page. the element where you bind your event handler must already exist at the time the handler is bound, so for dynamically generated elements you must allow the event to bubble up and handle it further up.
+		// http://mrbool.com/how-to-create-an-editable-html-table-with-jquery/27425 - code from online which purports to make table editable.
+		// does NOT recalculate other table values YET
+		$('#theTable').on('dblclick', 'td#avgCustPurchase', function() { // binds event to the table, so cells added later can be edited
+			var originalAvgPurchase = $(this).text();  // Obtain and record the value in the cell being edited
+			$(this).addClass("cellEditing"); // adds class to cell that has been picked to highlight it
+			// Inserting an input into the cell clicked with the original value as the text.
+			$(this).html("<input type='number' value='" + originalAvgPurchase + "' />");
+			$(this).children().first().focus(); // put cursor in the input that has been added to the clicked cell
+			
+			// handles the doubleclick event of the input. (this) refers to the cell that was clicked. Uses the functions .first & .children to get the first child element of the cell, the input.
+			// use .change instead of keypress?
+			$(this).children().first().on('change', function() { 
+					var newAvgPurchase = $(this).val();// stores value user entered in input. this refers to input element
+					$('table tr.totalDonutRow').remove(); // removes total daily donut row in preparation for rebuilding table
+					if (newAvgPurchase <= 0 || newAvgPurchase == ' ') { // if statement to make sure user entered a positive number
+						$(this).parent().text(originalAvgPurchase); // puts original value back into cell
+						$(this).parent().removeClass("cellEditing"); // removes the highlighting
+						var newAvgPurchase = originalAvgPurchase
+					} else {
+						$(this).parent().text(newAvgPurchase); // puts new value entered into the input element of cell
+						$(this).parent().removeClass("cellEditing"); //removes the highlighting of newly edited cell
+					}
+
+					// for loop to rebuild the table
+					var newDailyDonutsBaked = 0;
+					var newHourlyData = 0;
+					$('table tr.dataRows').remove(); // removes table rows in preparation for rebuilding table
+					for (var z=0; z<shopToUse.hoursOperation; z++) {
+						var newHourlyDonutsBaked = Math.ceil(newAvgPurchase * shopToUse.hourlyCustomerData[z]);
+						// if statement adds a light green color to every other row
+						if ((z+1)%2 === 0) {
+						var $newHourlyData = $("<tr class='dataRows even'><td>" + (z+1) + "</td><td>" + shopToUse.hourlyCustomerData[z] + "</td><td>" + newHourlyDonutsBaked + "</td></tr>");
+						} else {
+							var $newHourlyData = $("<tr class='dataRows'><td>" + (z+1) + "</td><td>" + shopToUse.hourlyCustomerData[z] + "</td><td>" + newHourlyDonutsBaked + "</td></tr>");
+						}
+						$("tr:last").after($newHourlyData); 
+						var newDailyDonutsBaked = newDailyDonutsBaked + newHourlyDonutsBaked;
+					}	
+						// creates last row of table which is the total donuts needed to bake today
+						var $totalDonuts = $("<tr class='totalDonutRow'><td></td><th>total donuts to bake today</th><td>"+ newDailyDonutsBaked + "</td></tr>");
+						$("tr:last").after($totalDonuts);		
+			});
+
+				
+			
+			// if user exits w/out pressing enter these lines put original value back into cell
+			// and remove the highlighting
+			$(this).children().first().blur(function(){ // blur is when element loses focus
+				$(this).parent().text(originalAvgPurchase); // puts original value back into cell
+				$(this).parent().removeClass("cellEditing"); // removes the highlighting
+			});
+		});
 	});
 });
 
